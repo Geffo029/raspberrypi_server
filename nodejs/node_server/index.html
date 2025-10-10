@@ -1,0 +1,86 @@
+<html>
+
+<head>
+	<title>Raspberry PI 3</title>
+	<style>
+	</style>
+</head>
+
+<body onload="firstUpdate()">
+	Ben arrivato <br>
+	o meglio, 
+	<h2 id="titolo">BEN ARRIVATO!</h2>
+
+	<pre>
+	<div id="info"></div>
+	</pre>
+
+	<script>
+		const TAB_SIZE = 4
+		
+		async function firstUpdate() {
+			updateInfos()
+		}
+		
+		const info_div = document.getElementById('info')
+
+		async function updateInfos() {
+			const resp = await fetch('/infos')
+			const infos_json = await resp.json()
+			info_div.innerHTML = JSON.stringify(infos_json, null, TAB_SIZE
+			)
+		}
+
+		setInterval(updateInfos, 2000);
+	</script>
+<!--
+	<div id="info"></div>
+	<table id="info-table"></table>
+
+	<script >
+		const infoPanel = document.getElementById('info-table');
+		
+		async function firstUpdate() {
+			const resp = await fetch('/infos');		
+			const infos = await resp.json();
+
+			let tableStr = ""
+			Object.entries(infos).forEach(([property_name, subproperties]) => {
+				const subpropertiesCount = Object.keys(subproperties).length; 
+				Object.entries(subproperties).forEach(([subproperty_name, value], i) => {
+					tableStr += "<tr>";
+					if (i == 0) 
+						tableStr += `<th rowspan=${subpropertiesCount}>${property_name}</th>`;
+					tableStr += `<td>${subproperty_name}</td><td id=${subproperty_name}>${value}</td>`
+					tableStr += "</tr>\n";
+				});
+			});
+			infoPanel.innerHTML = tableStr;
+		}
+
+		async function updateInfosPanel() {
+			console.log("About to fetching infos");
+			const resp = await fetch('/infos');		
+			const infos = await resp.json();
+			// console.log(infos);
+
+			Object.entries(infos).forEach(([property_name, subproperties]) => {
+				Object.entries(subproperties).forEach(([subproperty_name, value]) => {
+					if (Array.isArray(value) && value.length == 2) {
+						document.getElementById(subproperty_name).textContent = `${Number.parseFloat(value[0]).toFixed(1)} ${value[1]}`;
+					} else {
+						document.getElementById(subproperty_name).textContent = value;
+					}
+				});
+			});
+					// infoPanel.textContent = "Used memory: " + infos.memory.used;
+
+		}
+
+		setInterval(updateInfosPanel, 2000);
+	</script>
+-->
+
+</body>
+
+</html>
