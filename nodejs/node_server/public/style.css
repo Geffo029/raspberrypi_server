@@ -1,0 +1,22 @@
+body {
+    background: black;
+    color: #cccccc;
+}
+
+/* Switch to light mode if the user prefers it */
+/*
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+*/
+
+* {
+	font-family: monospace;
+}
+
+pre {	
+	font-size: large;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+	<title>Raspberry PI 3</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<style>
+	</style>
+</head>
+
+
+<body onload="firstUpdate()">
+	<h2>RaspberryPi</h2>
+
+	<pre>
+	<div id="info"></div>
+	</pre>
+
+	<script>
+		const TAB_SIZE = 4
+		
+		async function firstUpdate() {
+			updateInfos()
+		}
+		
+		const info_div = document.getElementById('info')
+
+		async function updateInfos() {
+			const resp = await fetch('/infos')
+			const infos_json = await resp.json()
+			info_div.innerHTML = JSON.stringify(infos_json, null, TAB_SIZE)
+		}
+
+		setInterval(updateInfos, 2000);
+	</script>
+</body>
+
+
+</html>

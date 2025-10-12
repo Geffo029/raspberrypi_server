@@ -6,56 +6,40 @@ const PORT = 1789
 const INFOS_FILE = '/tmp/hwinfos'
 
 
+const pathAliases = {
+	'/': '/index.html'
+}
+
+
 const server = http.createServer((requestObj, responseObj) => {
-	// console.log("Request accepted");
+	console.log("Requested path:", requestObj.url)
 
-	responseObj.setHeader('Content-Type', 'text/html');	// 'text/plain'...
-	let code = 200;
+	let url = typeof pathAliases[requestObj.url] === 'undefined' ? requestObj.url : pathAliases[requestObj.url]
+	let filePath = 
+		url === '/infos' ? INFOS_FILE : __dirname + "/public" + url
 
-	let path = "";
-	switch (requestObj.url) {
-		case '/': 
-			path = './index.html';
-			break;
-		case '/about': 
-			path = './about.html';
-			break;
-		case '/about-me': 
-			responseObj.setHeader('Location', '/about');
-			responseObj.statusCode = 301;
-			responseObj.end();
-			break;
-		// case '/scripts/script.js':
-		// 	responseObj.setHeader('Content-Type', 'application/javascript')
-		// 	path = '.' + requestObj.url
-		// 	break;
-		case '/infos':
-			responseObj.write(fs.readFileSync(INFOS_FILE, 'utf-8', 'r'))
-			//responseObj.write(JSON.stringify(updatedInfos()));
-			responseObj.end();
-			break;
-		default: 
-			path = './error.html';
-			code = 404;
-	}
-
-	//responseObj.writeHead(404, {'Content-Type': 'text/html'});
-	responseObj.statusCode = code;
-
-	if (path != "") {
-		fs.readFile(path, 'utf8', (error, data) => {
-			console.log("Reading file " + path)
-			if (error) { 
-				console.log("Errore " + error); 
-			} else {
-				responseObj.write(data);
-			}
-			responseObj.end();
-		});
-	}
+	fs.readFile(filePath, (err, content) => {
+		if (err) {
+			console.log("File not found:", filePath)
+			responseObj.statusCode = 404
+			responseObj.end()
+		} else {
+			responseObj.statusCode = 200
+			responseObj.write(content)
+			responseObj.end()
+		}
+	})
 });
 
 
 server.listen(PORT, () => {
 	console.log("Listening on port " + PORT + " ...")
 })
+
+
+
+// Fancy way to handle differents request urls
+// https://gist.github.com/prof3ssorSt3v3/8d9fc6be89d3aefd3ea84b92f923181a#file-server-route-js-L52
+// let routes = {
+	// "/": function() {}
+// }
