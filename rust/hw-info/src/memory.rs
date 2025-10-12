@@ -41,30 +41,22 @@ impl MemoryParser {
 		
 		let lines = lines.collect::<Vec<&str>>();
 		let mem_total_kb = parse_line(lines[0]);
-		let mem_free_kb = parse_line(lines[1]);
+		let _mem_free_kb = parse_line(lines[1]);
 		let mem_avail_kb = parse_line(lines[2]);
-		let buffers_kb = parse_line(lines[3]);
-		let cached_kb = parse_line(lines[4]);
-		let swap_total_kb = parse_line(lines[14]);
-		let swap_free_kb = parse_line(lines[15]);
+		let _buffers_kb = parse_line(lines[3]);
+		let _cached_kb = parse_line(lines[4]);
+		let _swap_total_kb = parse_line(lines[14]);
+		let _swap_free_kb = parse_line(lines[15]);
 
 		// `free` "used memory" formula: total - available
 		let mem_used_kb = mem_total_kb - mem_avail_kb;
 
-		// `htop` "used memory" formula: 
-
-		let total_mb = Measure {
-			value: mem_total_kb / 1000.0,
-			unit: String::from("MB")
-		};
-		let used_mb = Measure {
-			value: mem_used_kb / 1000.0,
-			unit: String::from("MB")
-		};
-		let used_perc = Measure {
-			value: 100.0 * mem_used_kb / mem_total_kb,
-			unit: String::from("%")
-		};
+		// `htop` "used memory" formula: ...
+		
+		
+		let total_mb = Measure::new(mem_total_kb/1000.0, String::from("MB"));
+		let used_mb = Measure::new(mem_used_kb/1000.0, String::from("MB"));
+		let used_perc = Measure::new(100.0*mem_used_kb/mem_total_kb, String::from("%"));
 
 		Memory {
 			total_mb,

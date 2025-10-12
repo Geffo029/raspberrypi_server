@@ -25,6 +25,8 @@ struct HwInfos {
 	disk: Disk
 }
 
+
+// asdasd
 fn main() {
     let mut cpu_parser = CpuParser::new();
     let mut memory_parser = MemoryParser::new();

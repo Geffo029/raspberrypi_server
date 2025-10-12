@@ -91,11 +91,8 @@ impl CpuParser {
 		let usage = calculate_cpu_usage(&cpu_times, &self.prev_cpu_times);
 
 		self.prev_cpu_times = cpu_times;
-	 
-		Measure {
-			value: usage,
-			unit: String::from("%")
-		}
+
+	 	Measure::new(usage, String::from("%"))
 	}
 
 	fn parse_freq(&mut self) -> Measure {
@@ -105,10 +102,7 @@ impl CpuParser {
 
 		let freq = buf.trim().parse::<f32>().unwrap();
 
-		Measure {
-			value: freq / 1000.0,
-			unit: String::from("MHz")
-		}
+		Measure::new(freq/1000.0, String::from("MHz"))
 	}
 
 	fn parse_temp(&mut self) -> Measure {
@@ -118,10 +112,7 @@ impl CpuParser {
 
 		let temp = buf.trim().parse::<f32>().unwrap(); 
 
-		Measure {
-			value: temp / 1000.0,
-			unit: String::from("^C")
-		}
+		Measure::new(temp/1000.0, String::from("^C"))
 	}
 
 }

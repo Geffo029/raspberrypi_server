@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
-use std::time::{Duration, Instant};
+use std::time::Instant;
 use serde::Serialize;
 
 use crate::measure::Measure;
@@ -102,14 +102,8 @@ impl DiskParser {
 
 		self.prev_disk_stats = stats;
 
-		let read = Measure {
-			value: read_kb_bandwith,
-			unit: String::from("KB/s")
-		};
-		let write = Measure {
-			value: write_kb_bandwith,
-			unit: String::from("KB/s")
-		};
+		let read = Measure::new(read_kb_bandwith, String::from("KB/s"));
+		let write = Measure::new(write_kb_bandwith, String::from("KB/s"));
 
 		(read, write)
 	}
