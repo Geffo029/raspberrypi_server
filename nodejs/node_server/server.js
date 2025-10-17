@@ -12,11 +12,10 @@ const pathAliases = {
 
 
 const server = http.createServer((requestObj, responseObj) => {
-	console.log("Requested path:", requestObj.url)
+	//console.log("Requested path:", requestObj.url)
 
 	let url = typeof pathAliases[requestObj.url] === 'undefined' ? requestObj.url : pathAliases[requestObj.url]
-	let filePath = 
-		url === '/infos' ? INFOS_FILE : __dirname + "/public" + url
+	let filePath = url === '/infos' ? INFOS_FILE : __dirname + "/public" + url
 
 	fs.readFile(filePath, (err, content) => {
 		if (err) {
@@ -38,7 +37,7 @@ server.listen(PORT, () => {
 
 
 
-// Fancy way to handle differents request urls
+// Fancy way to handle different request urls
 // https://gist.github.com/prof3ssorSt3v3/8d9fc6be89d3aefd3ea84b92f923181a#file-server-route-js-L52
 // let routes = {
 	// "/": function() {}
