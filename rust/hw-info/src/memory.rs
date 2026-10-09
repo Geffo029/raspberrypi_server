@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
 use serde::Serialize;
 
-use crate::measure::Measure;
+use crate::atomicdata::Measure;
 
 
 

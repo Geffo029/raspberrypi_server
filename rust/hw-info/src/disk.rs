@@ -3,7 +3,7 @@ use std::io::{Read, Seek, SeekFrom};
 use std::time::Instant;
 use serde::Serialize;
 
-use crate::measure::Measure;
+use crate::atomicdata::Measure;
 
 
 

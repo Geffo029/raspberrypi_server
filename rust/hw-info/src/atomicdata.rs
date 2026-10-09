@@ -13,3 +13,6 @@ impl Measure {
 	pub fn value(&self) -> f32 { self.0 }
 	pub fn unit(&self) -> &String { &self.1 }
 }
+
+
+// pub struct Info()
